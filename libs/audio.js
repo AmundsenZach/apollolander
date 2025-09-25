@@ -12,30 +12,25 @@ var audio = {};
     // helper functions
     var chr = String.fromCharCode; // alias for getting converting int to char 
     
-    //////////////////////
-    // Wave            ///
-    //////////////////////
+    // Wave
     
     var waveTag="data:audio/wav;base64,";
     // constructs a wave from sample array
-    var constructWave = function(data){
-        return pack( ["RIFF",36+(l=data.length),"WAVEfmt ",16,1,NumChannels,SampleRate,
-                       ByteRate,BlockAlign,BitsPerSample,"data",l,data],"s4s4224422s4s");
+    var constructWave = function(data) {
+        return pack(["RIFF", 36 + (l = data.length),"WAVEfmt ", 16, 1, NumChannels, SampleRate, ByteRate, BlockAlign, BitsPerSample, "data", l, data],"s4s4224422s4s");
     };
     
     // creates an audio object from sample data
-    this.make = function(arr){
+    this.make = function(arr) {
         return new Audio(waveTag + btoa(constructWave(arrayToData(arr))))
     };
     
     // creates a wave file for downloading
-    this.makeWaveFile = function(arr){
+    this.makeWaveFile = function(arr) {
         dataToFile(waveTag + btoa(constructWave(arrayToData(arr))))
     };
     
-    //////////////////////
-    // General stuff   ///
-    //////////////////////
+    // General stuff
      
     // Converts an integer to String representation
     //   a - number
@@ -146,6 +141,7 @@ var audio = {};
                 return A * (out[pos-1] + data[pos] - data[pos-1])
             }
     };
+
     var filters = this.filters;
     
     this.f = {
@@ -171,19 +167,31 @@ var audio = {};
     var lastNoise = 0;
     
     var generate = this.generate;
-    this.generators =  {
-        noise  : function(phase){
-                    if(phase % TAU < 4){
-                        lastNoise = Math.random() * 2 - 1;
-                    }
-                    return lastNoise;
-                },
+    this.generators = {
+        noise : function(phase) {
+            if (phase % TAU < 4) {
+                lastNoise = Math.random() * 2 - 1;
+            }
+            
+            return lastNoise;
+        },
+
         uninoise : Math.random,
-        sine   : Math.sin,
-        synth  : function(phase){return sin(phase) + .5*sin(phase/2) + .3*sin(phase/4)},
-        saw    : function(phase){return 2*(phase/TAU - ((phase/TAU + 0.5)|0))},
-        square : function(phase,A){return sin(phase) > A ? 1.0 : sin(phase) < A ? -1.0 : A}
+        sine : Math.sin,
+
+        synth : function(phase) {
+            return sin(phase) + 0.5 * sin(phase / 2) + 0.3 * sin(phase / 4)
+        },
+
+        saw : function(phase) {
+            return 2 * (phase / TAU - ((phase / TAU + 0.5) | 0))
+        },
+
+        square : function(phase, A) {
+            return sin(phase) > A ? 1.0 : sin(phase) < A ? -1.0 : A
+        }
     };
+
     var generators = this.generators;
     
     this.g = {
