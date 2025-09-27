@@ -48,7 +48,7 @@ function Landscape(){
 
 		
 	
-	var render = this.render = function(c, view) { 
+	var render = this.render = function (c, view) { 
 
 		var offset = 0; 
 		

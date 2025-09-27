@@ -91,13 +91,10 @@ var	WAITING = 0,
 
 window.addEventListener("load", init);
 
-function init()
-{
+function init() {
 	if (window["initWebSocket"]) {
 		initWebSocket();
 	}
-
-	// CANVAS SET UP
 	
 	document.body.appendChild(canvas);
 	
@@ -111,23 +108,23 @@ function init()
 	document.body.addEventListener('mousemove', onMouseMove);
 	document.body.addEventListener('touchstart', onTouchStart);
 	
-	KeyTracker.addKeyDownListener(KeyTracker.UP, function() {
+	KeyTracker.addKeyDownListener(KeyTracker.UP, function () {
 		if (gameState == PLAYING) {
 			lander.thrust(1);
 		}
 	});
 
-	KeyTracker.addKeyUpListener(KeyTracker.UP, function() {
+	KeyTracker.addKeyUpListener(KeyTracker.UP, function () {
 		lander.thrust(0);
 	});
 
-	KeyTracker.addKeyDownListener(" ", function() {
+	KeyTracker.addKeyDownListener(" ", function () {
 		if (gameState == PLAYING) {
 			lander.thrust(1);
 		}
 	});
 
-	KeyTracker.addKeyUpListener(" ", function() {
+	KeyTracker.addKeyUpListener(" ", function () {
 		lander.thrust(0);
 	});
 
@@ -863,12 +860,12 @@ function resizeGame (event) {
 
 function makeThrustParticles() {
 	var vel = new Vector2(0,1);
-	vel.rotate(lander.rotation+randomRange(-7,7));
+	vel.rotate(lander.rotation+randomRange(-7, 7));
 	var pos = lander.pos.clone();
 	offset = vel.multiplyNew(2.7);
 	
 	pos.plusEq(offset);
-	vel.multiplyEq(randomRange(0.1,0.6));
+	vel.multiplyEq(randomRange(0.1, 0.6));
 	vel.plusEq(lander.vel);
 	
 	var particle = getNewParticle(pos, vel);
@@ -913,7 +910,7 @@ function Rectangle(x, y, width, height) {
 	this.width = width;
 	this.height = height;
 	
-	this.getBottom = function() {
+	this.getBottom = function () {
 		return this.y+this.height;
 	}
 
@@ -925,11 +922,11 @@ function Rectangle(x, y, width, height) {
 		return this.x+this.width;
 	}
 
-	this.getTop = function() {
+	this.getTop = function () {
 		return this.y;
 	}
 
-	this.setBottom = function(bottom) {
+	this.setBottom = function (bottom) {
 		this.height = bottom - this.y;
 	}
 
@@ -937,12 +934,12 @@ function Rectangle(x, y, width, height) {
 		this.width = right - this.x;
 	}
 
-	this.setTop = function(top) {
+	this.setTop = function (top) {
 		this.height -= (top-this.y);
 		this.y = top;
 	}
 
-	this.setLeft = function(left) {
+	this.setLeft = function (left) {
 		this.width -= (this.x-left);
 		this.x = left;
 	}
@@ -954,14 +951,14 @@ function Particle(_pos,_vel) {
 	this.life = 0;
 	this.active = true;
 	
-	this.reset = function(_pos, _vel) {
+	this.reset = function (_pos, _vel) {
 		pos.copyFrom(_pos);
 		vel.copyFrom(_vel);
 		this.life = 0;
 		this.active = true;
 	}
 	
-	this.update = function() {
+	this.update = function () {
 		if (!this.active) {
 			return;
 		}
@@ -970,7 +967,7 @@ function Particle(_pos,_vel) {
 		this.life++;
 	}
 
-	this.render = function(c, scale) {
+	this.render = function (c, scale) {
 		if (!this.active) {
 			return;
 		}

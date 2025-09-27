@@ -51,7 +51,7 @@ function TouchController() {
 		}	
 	}
 	
-	this.render = function(c) { 
+	this.render = function (c) { 
 		if (leftTouch.touching) { 
 			c.beginPath(); 
 			c.strokeStyle = "red";
@@ -80,7 +80,7 @@ function TouchData() {
 }
 
 TouchData.prototype = { 
-	startTouch : function(x, y, ID) { 
+	startTouch : function (x, y, ID) { 
 		this.ID = ID; 
 		this.touching = true; 
 		this.touchStartPos.reset(x, y); 
@@ -88,30 +88,30 @@ TouchData.prototype = {
 		this.touchPos.reset(x, y); 
 	},
 
-	updateTouch : function(x, y) { 
+	updateTouch : function (x, y) { 
 		this.touchPos.reset(x, y); 
 		this.touchVector.reset(x, y); 
 		this.touchVector.minusEq(this.touchStartPos); 
 	},
 
-	endTouch : function() { 
+	endTouch : function () { 
 		this.touching = false; 
 		this.ID = -1; 
 	},
 
-	getX : function() { 
+	getX : function () { 
 		return this.touchPos.x; 
 	},
 
-	getY : function() { 
+	getY : function () { 
 		return this.touchPos.y; 
 	},
 
-	getXOffset : function() { 
+	getXOffset : function () { 
 		return this.touchPos.x - this.touchStartPos.x; 
 	},
 
-	getYOffset : function() { 
+	getYOffset : function () { 
 		return this.touchPos.y - this.touchStartPos.y; 
 	}
 };

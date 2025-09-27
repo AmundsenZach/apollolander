@@ -1,4 +1,4 @@
-Lander = function() { 
+Lander = function () { 
 	
 	var vel = this.vel = new Vector2(0, 0),
 		pos = this.pos = new Vector2(0, 0),
@@ -64,7 +64,7 @@ Lander = function() {
 		
 	reset();
 	
-	this.rotate = function(direction) { 
+	this.rotate = function (direction) { 
 		var now = new Date().getTime(); 
 		if (now - lastRotationTime > 80) {
 			
@@ -75,7 +75,7 @@ Lander = function() {
 		}
 	};
 	
-	this.setRotation = function(angle) { 
+	this.setRotation = function (angle) { 
 		targetRotation = Math.round(clamp(angle, -90, 90) / 10) * 10; 
 	}
 	
@@ -83,7 +83,7 @@ Lander = function() {
 		this.thrusting = power;
 	};
 	
-	this.abort = function() {
+	this.abort = function () {
 		var now = Date.now(); 
 		
 		if (now - lastAbort > 10000) { 
@@ -92,7 +92,7 @@ Lander = function() {
 		} 
 	}
 	
-	this.update = function() { 
+	this.update = function () { 
 		counter++; 
 		
 		this.rotation += (targetRotation-this.rotation) * 0.3;
@@ -148,7 +148,7 @@ Lander = function() {
 		
 	};
 	
-	this.render = function(c, scale) { 
+	this.render = function (c, scale) { 
 		
 		if (typeof scale == 'undefined') scale = 1;
 		
@@ -201,12 +201,12 @@ Lander = function() {
 		thrustBuild = 0; 
 	};
 	
-	this.makeBounce = function() { 
+	this.makeBounce = function () { 
 		bouncing = Math.PI * 2;	
 		
 	};
 	
-	this.defineShape = function(){
+	this.defineShape = function (){
 		
 		var m = 'm',
 			l = 'l',
@@ -293,7 +293,7 @@ Lander = function() {
 	};
 	this.defineShape(); 
 	
-	this.updateShapesAnimation = function() { 
+	this.updateShapesAnimation = function () { 
 		if (!exploding) return; 
 		
 		for (var i = 0; i < shapePos.length; i++) { 
@@ -301,7 +301,7 @@ Lander = function() {
 		}
 	};
 	
-	this.renderShapes = function(c) { 
+	this.renderShapes = function (c) { 
 		
 		var shapes = this.shapes, 
 			shapePos = this.shapePos, 

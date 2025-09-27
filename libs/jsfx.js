@@ -10,14 +10,14 @@ var jsfx = {};
         synth  : audio.generators.synth
     };
     
-    this.getGeneratorNames = function(){
+    this.getGeneratorNames = function (){
         var names = [];
         for(e in this.Generators)
             names.push(e);
         return names;
     }
     
-    var nameToParam = function(name){
+    var nameToParam = function (name){
         return name.replace(/ /g, "");
     }
     
@@ -37,7 +37,7 @@ var jsfx = {};
         };
         
         // add option
-        var ao = function(name, options, def){
+        var ao = function (name, options, def){
             var param = {name: name, id: nameToParam(name),
                          options: options, def: def,
                          type: "option", group: grp };
@@ -104,7 +104,7 @@ var jsfx = {};
      *    data = jsfx.generate(params)
      *    audio.make(data)
      */
-    this.generate = function(params){
+    this.generate = function (params){
         // useful consts/functions
         var TAU = 2 * Math.PI,
             sin = Math.sin,

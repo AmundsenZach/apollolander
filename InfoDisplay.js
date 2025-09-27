@@ -30,7 +30,7 @@ function InfoDisplay(width, height) {
 		messages.domElement.className = "titleBox";
 		
 	this.arrangeBoxes = arrangeBoxes;
-	
+
 	arrangeBoxes(w,h);
 	
 	function makeInfoBox(text, align, width) {
@@ -99,7 +99,7 @@ function InfoDisplay(width, height) {
 		document.body.style.fontSize = '50%';
 	}
 	
-	this.showGameInfo = function(msg) {
+	this.showGameInfo = function (msg) {
 		messages.show();
 		return messages.setText(msg); // returns true if message was changed.
 	};
@@ -109,7 +109,7 @@ function InfoDisplay(width, height) {
 		messages.hide();
 	};
 	
-	this.updateBoxInt = function(boxname, value, padding) {
+	this.updateBoxInt = function (boxname, value, padding) {
 		value = Math.floor(value);
 	
 		if (padding > 0) {
@@ -124,7 +124,7 @@ function InfoDisplay(width, height) {
 		}
 	};
 	
-	this.updateBoxTime = function(boxname, value) {
+	this.updateBoxTime = function (boxname, value) {
 		value = Math.floor(value);
 		
 		secs = Math.floor(value / 1000);
@@ -158,7 +158,7 @@ function InfoBox(align, width) {
 		dom.style.textAlign = 'center';
 	}
 	
-	this.setText = function(text) {
+	this.setText = function (text) {
 		if (text != content) {
 			content = text;
 			dom.innerHTML = text;
@@ -168,7 +168,7 @@ function InfoBox(align, width) {
 		}
 	};
 
-	this.setX = function(x) {
+	this.setX = function (x) {
 		if (align == 2) {
 			x -= width;
 		} else if(align == 1) {
@@ -178,11 +178,11 @@ function InfoBox(align, width) {
 		dom.style.left = x+'px';
 	};
 
-	this.setY = function(y) {
+	this.setY = function (y) {
 		dom.style.top = y + 'px';		
 	};
 	
-	this.hide = function() {
+	this.hide = function () {
 		if (!this.hidden) {
 			dom.style.display = 'none';
 		}
@@ -190,7 +190,7 @@ function InfoBox(align, width) {
 		this.hidden = true;
 	};
 
-	this.show = function() {
+	this.show = function () {
 		if (this.hidden) {
 			dom.style.display = 'block';
 		}
