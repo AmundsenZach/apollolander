@@ -13,11 +13,11 @@ var audio = {};
     var chr = String.fromCharCode; // alias for getting converting int to char
 
     // Wave
+    var waveTag = "data:audio/wav;base64,";
 
-    var waveTag="data:audio/wav;base64,";
     // constructs a wave from sample array
     var constructWave = function (data) {
-        return pack(["RIFF", 36 + (l = data.length),"WAVEfmt ", 16, 1, NumChannels, SampleRate, ByteRate, BlockAlign, BitsPerSample, "data", l, data],"s4s4224422s4s");
+        return pack(["RIFF", 36 + (l = data.length),"WAVEfmt ", 16, 1, NumChannels, SampleRate, ByteRate, BlockAlign, BitsPerSample, "data", l, data], "s4s4224422s4s");
     };
 
     // creates an audio object from sample data
@@ -30,23 +30,19 @@ var audio = {};
         dataToFile(waveTag + btoa(constructWave(arrayToData(arr))))
     };
 
-    // General stuff
-
-    // Converts an integer to String representation
-    //   a - number
-    //   i - number of bytes
-    var istr = function (a,i){
+    var istr = function (a, i){
         var m8 = 0xff; // 8 bit mask
-        return i?chr(a&m8)+istr(a>>8,i-1):"";
+        return i ? chr(a & m8) + istr(a >> 8, i - 1):"";
     };
 
-    // Packs array of data to a string
     //   data   - array
     //   format - s is for string, numbers denote bytes to store in
     var pack = function (data,format){
         var out="";
-        for(i=0;i<data.length;i++)
-            out+=format[i]=="s"?data[i]:istr(data[i],format.charCodeAt(i)-48);
+        for (i = 0; i < data.length; i++) {
+            out += format[i] == "s" ? data[i] : istr(data[i], format.charCodeAt(i) - 48);
+        }
+
         return out;
     }
 
@@ -59,50 +55,66 @@ var audio = {};
     // Utilities
 
     // often used variables (just for convenience)
-    var count,out,i,sfreq;
+    var count, out, i, sfreq;
     var sin = Math.sin;
-    var TAU = 2*Math.PI;
-    var Arr = function (c){return new Array(c|0)}; // alias for creating a new array
+    var TAU = 2 * Math.PI;
 
-    var clamp8bit  = function (a){return a<0?0:255<a?255:a}
-    var sample8bit = function (a){return clamp((a*127+127)|0)}
+    var Arr = function (c) {
+        return new Array(c | 0)
+    }; // alias for creating a new array
 
-    this.toTime    = function (a){return a/SampleRate}
-    this.toSamples = function (a){return a*SampleRate}
+    var clamp8bit  = function (a) {
+        return a < 0 ? 0 : 255 < a ? 255 : a
+    }
 
-    var arrayToData16bit = function (arr){
-        var out="";
+    var sample8bit = function (a) {
+        return clamp((a * 127 + 127) | 0)
+    }
+
+    this.toTime = function (a) {
+        return a / SampleRate
+    
+    }
+
+    this.toSamples = function (a) {
+        return a * SampleRate
+    }
+
+    var arrayToData16bit = function (arr) {
+        var out = "";
         var len = arr.length;
-        for( i=0 ; i < len ; i++){
+        for (i = 0; i < len ; i++){
             var a = (arr[i] * 32767) | 0;
             a = a < -32768 ? -32768 : 32767 < a ? 32767 : a; // clamp
-            a += a < 0 ? 65536 : 0;                       // 2-s complement
+            a += a < 0 ? 65536 : 0;
             out += String.fromCharCode(a & 255, a >> 8);
         };
+
         return out;
     }
 
-    var arrayToData8bit = function (arr){
-        var out="";
+    var arrayToData8bit = function (arr) {
+        var out = "";
         var len = arr.length;
-        for( i=0 ; i < len ; i++){
+
+        for (i = 0 ; i < len; i++){
             var a = (arr[i] * 127 + 128) | 0;
             a = a < 0 ? 0 : 255 < a ? 255 : a;
             out += String.fromCharCode(a);
         };
+
         return out;
     }
 
     var arrayToData = function (arr){
-        if( BitsPerSample == 16 )
+        if (BitsPerSample === 16) {
             return arrayToData16bit(arr);
-        else
+        } else {
             return arrayToData8bit(arr);
+        }
     }
 
-    //////////////////////
     // Processing
-    //////////////////////
 
     // adjusts volume of a buffer
     this.adjustVolume = function (data, v){
@@ -112,16 +124,19 @@ var audio = {};
     }
 
     // Filters
-    //////////////////////
 
-    this.filter = function (data,func,from,to,A,B,C,D,E,F){
+    this.filter = function (data, func, from, to, A, B, C, D, E, F) {
         from = from ? from : 1;
         to = to ? to : data.length;
         out = data.slice(0);
-        for(i=from;i<to;i++)
-            out[i] = func(data, out, from,to,i,A,B,C,D,E,F)
+        
+        for (i = from; i < to; i++) {
+            out[i] = func(data, out, from, to, i, A, B, C, D, E, F);
+        }
+
         return out;
     };
+
     var filter = this.filter;
 
     this.filters = {
@@ -142,22 +157,30 @@ var audio = {};
     var filters = this.filters;
 
     this.f = {
-        lowpass  : function (data, from, to, A){return filter(data, filters.lowpass, from, to, A);},
-        lowpassx : function (data, from, to, A){return filter(data, filters.lowpassx, from, to, A);},
-        highpass : function (data, from, to, A){return filter(data, filters.highpass, from, to, A);}
+        lowpass  : function (data, from, to, A){
+            return filter(data, filters.lowpass, from, to, A);
+        },
+
+        lowpassx : function (data, from, to, A){
+            return filter(data, filters.lowpassx, from, to, A);
+        },
+
+        highpass : function (data, from, to, A){
+            return filter(data, filters.highpass, from, to, A);
+        }
     }
 
     // Generators
-    //////////////////////
 
     // general sound generation
     // example:
     // generate(3, 440, Math.sin);
     this.generate = function (count, freq, func, A, B, C, D, E, F){
-        var sfreq=freq*TAU/SampleRate;
+        var sfreq = freq * TAU / SampleRate;
         var out = Arr(count);
-        for(i=0; i < count;i++)
-            out[i] = func(i*sfreq,A,B,C,D,E,F);
+
+        for (i = 0; i < count; i++)
+            out[i] = func(i * sfreq, A, B, C, D, E, F);
         return out;
     }
 
@@ -192,10 +215,24 @@ var audio = {};
     var generators = this.generators;
 
     this.g = {
-        noise  : function (count){ return generate(count,0, generators.noise) },
-        sine   : function (count, freq){ return generate(count, freq, generators.sine) },
-        synth  : function (count, freq){ return generate(count, freq, generators.synth) },
-        saw    : function (count, freq){ return generate(count, freq, generators.saw) },
-        square : function (count, freq, A){ return generate(count, freq, generators.square, A) }
+        noise : function (count) {
+            return generate(count,0, generators.noise) 
+        },
+
+        sine : function (count, freq) {
+            return generate(count, freq, generators.sine)
+        },
+
+        synth : function (count, freq) {
+            return generate(count, freq, generators.synth)
+        },
+
+        saw : function (count, freq) {
+            return generate(count, freq, generators.saw)
+        },
+
+        square : function (count, freq, A) {
+            return generate(count, freq, generators.square, A)
+        }
     };
 }).apply(audio);
