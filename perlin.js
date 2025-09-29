@@ -22,7 +22,7 @@
     }
   
     Grad.prototype.dot2 = function (x, y) {
-        return this.x*x + this.y*y;
+        return this.x * x + this.y * y;
     };
 
     Grad.prototype.dot3 = function (x, y, z) {

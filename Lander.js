@@ -294,7 +294,9 @@ Lander = function () {
 	this.defineShape(); 
 	
 	this.updateShapesAnimation = function () { 
-		if (!exploding) return; 
+        if (!exploding) {
+            return;
+        }
 		
 		for (var i = 0; i < shapePos.length; i++) { 
 		 	shapePos[i].plusEq(shapeVels[i]); 

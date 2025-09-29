@@ -244,7 +244,7 @@ function Landscape(){
 					points[points.length - 2].y = y; 
 				} else if (Math.abs(y - lasty) < 2) { 
 					
-					points[points.length-1].y = y; 
+					points[points.length - 1].y = y; 
 					points.push(new Vector2(x, y)); 
 					//points[points.length-2].y = y; 
 				} else {

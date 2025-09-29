@@ -78,6 +78,3 @@ function stopThruster() {
 	clearInterval(thrustInterval); 
 	thrustPlaying = false; 
 }
-	
-	
-	

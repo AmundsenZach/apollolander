@@ -28,19 +28,22 @@ KeyTracker = new (function () {
 	document.addEventListener("keyup", function (e) {
 		KeyTracker.keysPressed[e.keyCode] = false;
 		
-			for (var i = 0; i < keyUpListeners.length; i++) {
-				if (e.keyCode == keyUpListeners[i].key ) {
-					keyUpListeners[i].func();
-				}
+		for (var i = 0; i < keyUpListeners.length; i++) {
+			if (e.keyCode == keyUpListeners[i].key) {
+				keyUpListeners[i].func();
 			}
-		});
+		}
+	});
 		
 	this.addKeyDownListener = function (key, func) {
 		if (typeof key == 'string') {
 			key = key.charCodeAt(0);
 		}
 		
-		this.keyDownListeners.push({key:key, func:func});
+		this.keyDownListeners.push({
+			key: key, 
+			func: func
+		});
 	}
 	
 	this.addKeyUpListener = function (key, func) {
@@ -48,6 +51,9 @@ KeyTracker = new (function () {
 			key = key.charCodeAt(0);
 		}
 		
-		this.keyUpListeners.push({key:key, func:func});	
+		this.keyUpListeners.push({
+			key:key, 
+			func:func
+		});	
 	}
 })();
