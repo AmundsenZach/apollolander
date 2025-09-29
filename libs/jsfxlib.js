@@ -22,17 +22,17 @@ var jsfxlib = {};
     this.paramsToArray = function (params){
         var pararr = [];
         var len = jsfx.Parameters.length;
-        for (var i = 0; i < len; i++){
+        for (var i = 0; i < len; i++) {
             pararr.push(params[jsfx.Parameters[i].id]);
         }
 
         return pararr;
     }
 
-    this.arrayToParams = function (pararr){
+    this.arrayToParams = function (pararr) {
         var params = {};
         var len = jsfx.Parameters.length;
-        for (var i = 0; i < len; i++){
+        for (var i = 0; i < len; i++) {
             params[jsfx.Parameters[i].id] = pararr[i];
         }
 

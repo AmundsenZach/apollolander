@@ -105,35 +105,34 @@ Vector2.prototype = {
 	},
 	
 	angle : function (useRadians) {
-		
 		return Math.atan2(this.y,this.x) * (useRadians ? 1 : Vector2Const.TO_DEGREES);
-		
 	},
 	
 	rotate : function (angle, useRadians) {
-		
 		var cosRY = Math.cos(angle * (useRadians ? 1 : Vector2Const.TO_RADIANS));
 		var sinRY = Math.sin(angle * (useRadians ? 1 : Vector2Const.TO_RADIANS));
 	
 		Vector2Const.temp.copyFrom(this);
 
-		this.x= (Vector2Const.temp.x*cosRY)-(Vector2Const.temp.y*sinRY);
-		this.y= (Vector2Const.temp.x*sinRY)+(Vector2Const.temp.y*cosRY);
+		this.x = (Vector2Const.temp.x * cosRY) - (Vector2Const.temp.y * sinRY);
+		this.y = (Vector2Const.temp.x * sinRY) + (Vector2Const.temp.y * cosRY);
 		
 		return this;
 	},	
 		
 	equals : function (v) {
-		return((this.x==v.x)&&(this.y==v.x));
+		return ((this.x == v.x) && (this.y == v.x));
 	},
 	
 	isCloseTo : function (v, tolerance) {	
-		if(this.equals(v)) return true;
+		if (this.equals(v)) {
+			return true;
+		}
 		
 		Vector2Const.temp.copyFrom(this);
 		Vector2Const.temp.minusEq(v);
 		
-		return(Vector2Const.temp.magnitudeSquared() < tolerance*tolerance);
+		return (Vector2Const.temp.magnitudeSquared() < tolerance*tolerance);
 	},
 	
 	rotateAroundPoint : function (point, angle, useRadians) {
@@ -150,11 +149,11 @@ Vector2.prototype = {
 	},
 	
 	isMagLessThan : function (distance) {
-		return(this.magnitudeSquared()<distance*distance);
+		return (this.magnitudeSquared() < distance * distance);
 	},
 	
 	isMagGreaterThan : function (distance) {
-		return(this.magnitudeSquared() > distance * distance);
+		return (this.magnitudeSquared() > distance * distance);
 	}
 };
 

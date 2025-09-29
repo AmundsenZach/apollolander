@@ -83,7 +83,7 @@ var audio = {};
     var arrayToData16bit = function (arr) {
         var out = "";
         var len = arr.length;
-        for (i = 0; i < len ; i++){
+        for (i = 0; i < len; i++) {
             var a = (arr[i] * 32767) | 0;
             a = a < -32768 ? -32768 : 32767 < a ? 32767 : a; // clamp
             a += a < 0 ? 65536 : 0;
@@ -97,7 +97,7 @@ var audio = {};
         var out = "";
         var len = arr.length;
 
-        for (i = 0 ; i < len; i++){
+        for (i = 0 ; i < len; i++) {
             var a = (arr[i] * 127 + 128) | 0;
             a = a < 0 ? 0 : 255 < a ? 255 : a;
             out += String.fromCharCode(a);
@@ -106,7 +106,7 @@ var audio = {};
         return out;
     }
 
-    var arrayToData = function (arr){
+    var arrayToData = function (arr) {
         if (BitsPerSample === 16) {
             return arrayToData16bit(arr);
         } else {
@@ -117,9 +117,11 @@ var audio = {};
     // Processing
 
     // adjusts volume of a buffer
-    this.adjustVolume = function (data, v){
-        for(i=0;i<data.length;i++)
+    this.adjustVolume = function (data, v) {
+        for(i = 0; i < data.length; i++) {
             data[i] *= v;
+        }
+        
         return data;
     }
 
@@ -146,7 +148,7 @@ var audio = {};
             },
         lowpassx :
             function (data, out, from, to, pos, A){
-                return out[pos-1] + A*(to - pos)/(to-from) * (data[pos] - out[pos-1]);
+                return out[pos-1] + A*(to - pos) / (to-from) * (data[pos] - out[pos-1]);
             },
         highpass :
             function (data, out, from, to, pos, A){
@@ -179,8 +181,10 @@ var audio = {};
         var sfreq = freq * TAU / SampleRate;
         var out = Arr(count);
 
-        for (i = 0; i < count; i++)
+        for (i = 0; i < count; i++) {
             out[i] = func(i * sfreq, A, B, C, D, E, F);
+        }
+
         return out;
     }
 

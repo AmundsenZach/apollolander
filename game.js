@@ -404,8 +404,7 @@ function render() {
 			}
 			
 			//draws rotation controls
-			if (touchController.leftTouch.getX()!= 0) {
-				
+			if (touchController.leftTouch.getX() !=  0) {
 				if (touchController.leftTouch.touching) {
 					rotateDialBrightness = 100;
 				} else {
@@ -453,18 +452,18 @@ function render() {
 
 function checkKeys() {
 	
-	if((KeyTracker.isKeyDown(leftKey)) || (KeyTracker.isKeyDown(KeyTracker.LEFT))) {
+	if ((KeyTracker.isKeyDown(leftKey)) || (KeyTracker.isKeyDown(KeyTracker.LEFT))) {
 		lander.rotate(-1);	
-	} else if((KeyTracker.isKeyDown(rightKey)) || (KeyTracker.isKeyDown(KeyTracker.RIGHT))) {	
+	} else if ((KeyTracker.isKeyDown(rightKey)) || (KeyTracker.isKeyDown(KeyTracker.RIGHT))) {	
 		lander.rotate(1);
 	}
 
-	if(KeyTracker.isKeyDown(abortKey)) {
+	if (KeyTracker.isKeyDown(abortKey)) {
 		lander.abort();
 	}
 	
 	// SPEED MODE!
-	if(KeyTracker.isKeyDown('S')) {
+	if (KeyTracker.isKeyDown('S')) {
 		for (var i = 0; i < 3; i++) {
 			lander.update();
 		}
@@ -504,7 +503,7 @@ function updateView() {
 
 	// and apply it to the rectangle's height;
 	actionRectangle.y -= verticalpadding;
-	actionRectangle.height +=verticalpadding * 2;
+	actionRectangle.height += verticalpadding * 2;
 
 	// this is the lowest point in the landscape,
 	var landscapebottom = 750;
@@ -550,14 +549,14 @@ function updateView() {
 	var actionratio = viewRectangle.width / viewRectangle.height;
 	
 	// landscape shaped screens (will mostly be this one)
-	if(screenratio>actionratio) {
+	if (screenratio>actionratio) {
 		var newwidth = viewRectangle.height * screenratio;
 		var midx = (viewRectangle.x + (viewRectangle.width / 2));
 		var newx = midx - newwidth / 2;
 	
 		var diff = viewRectangle.x - newx;
 		//if(newx<0)
-		viewRectangle.x -= diff*0.8;
+		viewRectangle.x -= diff * 0.8;
 		//else viewRectangle.x = newx;
 		
 		viewRectangle.width = newwidth;
@@ -574,7 +573,6 @@ function updateView() {
 	view.y = viewRectangle.getTop();
 
 	view.scale = SCREEN_WIDTH/viewRectangle.width;
-	
 	
 	view.left = view.x;
 	view.top = view.y;
@@ -720,15 +718,15 @@ function checkCollisions() {
 		// if the ship overlaps this line
 		if (!((right < line.p1.x) || (left > line.p2.x))) {
 		
-			lander.altitude = line.p1.y-lander.bottom;
+			lander.altitude = line.p1.y - lander.bottom;
 			line.checked = true;
 			
 			// if the line's horizontal
-			if(line.landable) {
+			if (line.landable) {
 				// and the lander's bottom is overlapping the line
-				if(lander.bottom>=line.p1.y) {
+				if (lander.bottom >= line.p1.y) {
 					// and the lander is completely within the line
-					if((left>line.p1.x) && (right<line.p2.x)) {
+					if ((left > line.p1.x) && (right < line.p2.x)) {
 						// and we're horizontal and moving slowly
 						if ((lander.rotation == 0) && (lander.vel.y < 0.15)) {
 							setLanded(line);
@@ -765,7 +763,10 @@ function updateTextInfo() {
 	
 	infoDisplay.updateBoxInt('score', score, 4);
 	infoDisplay.updateBoxInt('fuel', lander.fuel, 4);
-	if(gameState == PLAYING) infoDisplay.updateBoxTime('time', counter*mpf);
+
+	if (gameState == PLAYING) {
+		infoDisplay.updateBoxTime('time', counter * mpf);
+	}
 	
 	infoDisplay.updateBoxInt('alt', (lander.altitude < 0) ? 0 : lander.altitude, 4);
 	infoDisplay.updateBoxInt('horizSpeed', (lander.vel.x * 200)); 	
@@ -775,7 +776,7 @@ function updateTextInfo() {
 		if (counter % 50 < 30) {
 			var playBeep;
 
-			if(lander.fuel <= 0) {
+			if (lander.fuel <= 0) {
 				playBeep = infoDisplay.showGameInfo("Out of Fuel");
 			} else {
 				playBeep = infoDisplay.showGameInfo("Fuel Low");
@@ -795,7 +796,7 @@ function showStartMessage() {
 }
 
 // returns a random number between the two limits provided
-function randomRange(min, max){
+function randomRange(min, max) {
 	return ((Math.random()*(max-min)) + min);
 }
 
